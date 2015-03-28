@@ -41,7 +41,7 @@ class RestaurantsController < ApplicationController
 		@rest_img = RestImg.new						 # for image uploads
 
 		# blog results
-		query = @restaurant.rest_info.title_addr.split.last + " " + @restaurant.name
+		query = @restaurant.name + " " + @restaurant.rest_info.title_addr.split.last
 		query = URI.encode("#{query}")
 
 		naver_key = "key=813b2e5e653326da6ff7d7114acf8748"
