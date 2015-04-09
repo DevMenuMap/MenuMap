@@ -51,6 +51,6 @@ class HomeController < ApplicationController
 	end
 
 	def test
-		@restaurants = Restaurant.where("picture is not null AND addr like ?", "%봉천%").where("menu_on = 0 OR menu_on is null")
+		@err = ReportRestErr.all
 	end
 end
