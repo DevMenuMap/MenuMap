@@ -1,3 +1,5 @@
+require 'net/http'
+
 class Restaurant < ActiveRecord::Base
 
 	has_one :rest_key, dependent: :destroy
@@ -23,6 +25,29 @@ class Restaurant < ActiveRecord::Base
 	# for restaurant index page's pagination.
 	self.per_page = 10
 
+	def self.ping(offset)
+		header = {
+			"User-agent" => "request",
+			"Host" => "apis.naver.com",
+			"Progma" => "no-cache",
+			"Content-type" => "application/x-www-form-urlencoded",
+			"Accept" => "*/*",
+			"Authorization" => "Bearer " + 'AAAAN8wgRyFhowAcR4CMuvk/efAw7n+eG0Gc0xOfJKfSrm6Yg+A+4+am23oxCIgJlOVhlxVJzTXmyxYyr4k1N3YbqaQ='
+		}
+
+		uri = URI.parse('https://apis.naver.com/crawl/nsyndi/v2')
+
+		http = Net::HTTP.new(uri.host, uri.port)
+		http.use_ssl = true
+		
+		atom_url = 'http://www.menumap.co.kr/sitemap.atom?offset=' + offset.to_s
+
+		args = { ping_url: atom_url }
+		uri.query = URI.encode_www_form(args)
+
+		request = Net::HTTP::Post.new(uri.request_uri, header)
+		http.request(request)
+	end
 	private
 
 		# set maximum image size.

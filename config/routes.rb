@@ -2,6 +2,7 @@ MenuMap::Application.routes.draw do
 
 	# Sitemap
   get "sitemap.xml", to: "sitemap#show", :defaults => { format: 'xml' }
+	get "sitemap.atom" => "sitemap#naver_seo", :defaults => { format: 'atom'}, as: :naver_seo_atom
 
 	# root page & brandpage.
 	root 'home#index'
